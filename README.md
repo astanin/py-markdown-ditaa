@@ -58,4 +58,4 @@ You may use "ditaa" extension together with `fenced_code` extension;
 [ditaa]: http://ditaa.sourceforge.net/
 [pymd]: http://pythonhosted.org//Markdown/
 [gfm]: https://help.github.com/articles/github-flavored-markdown#fenced-code-blocks
-[mdx_ditaa]: https://github.com/astanin/py-markdown-ditaa/mdx_ditaa.py
+[mdx_ditaa]: https://github.com/astanin/py-markdown-ditaa/blob/master/mdx_ditaa.py
