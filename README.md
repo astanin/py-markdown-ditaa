@@ -30,7 +30,8 @@ Download [mdx_ditaa.py][mdx_ditaa] file, edit `DITAA_CMD` according to
 where `ditaa` is installed, and put the file where Python can find it
 (like in the current directory).
 
-Add `"ditaa"` to the list of Markdown extensions when you generate HTMLç
+Add `"ditaa"` to the list of Markdown extensions when you generate HTML.
+PNG files will be generated and code blocks will be replaced with images.
 
 ```python
 >>> import markdown as md
