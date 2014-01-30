@@ -1,5 +1,6 @@
 import ctypes
 import os
+import platform
 import subprocess
 import tempfile
 import zlib
@@ -9,6 +10,14 @@ from markdown.preprocessors import Preprocessor
 from markdown.extensions import Extension
 
 
+if platform.python_version_tuple() >= ('3', '0', '0'):
+    def b(string):
+        return bytes(string, "UTF-8")
+else:
+    def b(string):
+        return string
+
+
 DITAA_CMD = os.environ.get("DITAA_CMD", "ditaa {infile} {outfile} --overwrite")
 
 
@@ -16,14 +25,15 @@ def generate_diagram(plaintext):
     """Run ditaa with plaintext input.
     Return filename of the generated image.
     """
-    imgfname = "diagram-%x.png" % (ctypes.c_uint32(zlib.adler32(plaintext)).value)
+    adler32 = ctypes.c_uint32(zlib.adler32(b(plaintext))).value
+    imgfname = "diagram-%x.png" % adler32
     srcfd, srcfname = tempfile.mkstemp(prefix="ditaasrc", text=True)
     outfd, outfname = tempfile.mkstemp(prefix="ditaaout", text=True)
-    os.write(srcfd, plaintext)
-    os.close(srcfd)
+    with os.fdopen(srcfd, "w") as src:
+       src.write(plaintext)
     try:
         cmd = DITAA_CMD.format(infile=srcfname, outfile=imgfname).split()
-        with os.fdopen(outfd, "rw") as out:
+        with os.fdopen(outfd, "w") as out:
             retval = subprocess.check_call(cmd, stdout=out)
         return imgfname
     except:
