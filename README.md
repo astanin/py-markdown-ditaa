@@ -62,6 +62,15 @@ On the command line:
 
     python -m markdown -x ditaa input.md > output.html
 
+This extension assumes that there is a `ditaa` executable on your
+`PATH`.  If it is not the case, or you want to override default
+`ditaa` parameters, set `DITAA_CMD` environment variable to be the
+desired command line to invoke `ditaa`, for example:
+
+    export DITAA_CMD="java -jar /usr/share/java/ditaa/ditaa-0_9.jar {infile} {outfile} --overwrite"
+
+where `{infile}` and `{outfile}` are placeholders for input and output file
+names.
 
 Compatiblity: ditaa and fenced_code
 -----------------------------------

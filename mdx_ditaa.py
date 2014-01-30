@@ -9,8 +9,7 @@ from markdown.preprocessors import Preprocessor
 from markdown.extensions import Extension
 
 
-# or "java -jar /path/to/ditaa.jar {infile} {outfile} --overwrite"
-DITAA_CMD = "ditaa {infile} {outfile} --overwrite"
+DITAA_CMD = os.environ.get("DITAA_CMD", "ditaa {infile} {outfile} --overwrite")
 
 
 def generate_diagram(plaintext):
