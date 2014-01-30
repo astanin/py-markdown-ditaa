@@ -56,7 +56,9 @@ Add `"ditaa"` to the list of Markdown extensions when you generate HTML.
     u'<p>Test diagram:</p>\n<p><img alt="diagram-2a5303bc.png" src="diagram-2a5303bc.png" /></p>'
 
 Code block was replaced with an image, a new image file
-`diagram-2a5303bc.png` was generated.
+`diagram-2a5303bc.png` was generated.  Image files are generated in
+the current directory, unless an environment variable
+`DITAA_IMAGE_DIR` is set.
 
 On the command line:
 
