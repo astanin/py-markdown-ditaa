@@ -21,21 +21,28 @@ else:
 DITAA_CMD = os.environ.get("DITAA_CMD", "ditaa {infile} {outfile} --overwrite")
 
 
+def generate_image_path(plaintext):
+    adler32 = ctypes.c_uint32(zlib.adler32(b(plaintext))).value
+    imgbasename = "diagram-%x.png" % adler32
+    ditaa_image_dir = os.environ.get("DITAA_IMAGE_DIR", ".")
+    imgpath = os.path.join(ditaa_image_dir, imgbasename)
+    return imgpath
+
+
 def generate_diagram(plaintext):
     """Run ditaa with plaintext input.
-    Return filename of the generated image.
+    Return relative path to the generated image.
     """
-    adler32 = ctypes.c_uint32(zlib.adler32(b(plaintext))).value
-    imgfname = "diagram-%x.png" % adler32
+    imgpath = generate_image_path(plaintext)
     srcfd, srcfname = tempfile.mkstemp(prefix="ditaasrc", text=True)
     outfd, outfname = tempfile.mkstemp(prefix="ditaaout", text=True)
     with os.fdopen(srcfd, "w") as src:
        src.write(plaintext)
     try:
-        cmd = DITAA_CMD.format(infile=srcfname, outfile=imgfname).split()
+        cmd = DITAA_CMD.format(infile=srcfname, outfile=imgpath).split()
         with os.fdopen(outfd, "w") as out:
             retval = subprocess.check_call(cmd, stdout=out)
-        return imgfname
+        return os.path.relpath(imgpath, os.getcwd())
     except:
         return None
     finally:
