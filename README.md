@@ -52,9 +52,8 @@ Add `"ditaa"` to the list of Markdown extensions when you generate HTML.
     ...
     ... ```
     ... """
-    >>> md.markdown(source, extensions=["ditaa"]) == \
-    ... '<p>Test diagram:</p>\n<p><img alt="diagram-2a5303bc.png" src="diagram-2a5303bc.png" /></p>'
-    True
+    >>> md.markdown(source, extensions=["ditaa"])
+    u'<p>Test diagram:</p>\n<p><img alt="diagram-2a5303bc.png" src="diagram-2a5303bc.png" /></p>'
 
 Code block was replaced with an image, a new image file
 `diagram-2a5303bc.png` was generated.
@@ -78,34 +77,6 @@ Compatiblity: ditaa and fenced_code
 
 You may use `ditaa` extension together with `fenced_code` extension;
 `ditaa` is supposed to act first.
-
-    >>> import markdown as md
-    >>> source = """Test diagram:
-    ...
-    ... ```ditaa
-    ... +---+
-    ... | A |
-    ... +---+
-    ... ```
-    ...
-    ... Test code:
-    ...
-    ... ```python
-    ... def f():
-    ...     pass
-    ... ```
-    ... """
-    >>> md.markdown(source, extensions=["fenced_code", "ditaa"]) == \
-    ... u'<p>Test diagram:</p>\n<p><img alt="diagram-1d900348.png" src="diagram-1d900348.png" /></p>\n<p>Test code:</p>\n<pre><code class="python">def f():\n    pass\n</code></pre>'
-    True
-
-
-Tests
------
-
-To run doctests:
-
-    python -m doctest README.md
 
 
 [ditaa]: http://ditaa.sourceforge.net/
